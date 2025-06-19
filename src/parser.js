@@ -2,7 +2,8 @@ import fs from "fs/promises";
 
 const weatherReadings = [];
 
-export async function ParseWeatherData(path = "data/weatherfiles/Murree_weather_2004_Aug.txt") {
+export async function ParseWeatherData(fileName) {
+  let path= `data/weatherfiles/${fileName}`
   try {
     const data = await fs.readFile(path, "utf8");
     const lines = data.split("\n");

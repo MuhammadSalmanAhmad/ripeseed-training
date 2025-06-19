@@ -1,2 +1,1 @@
-const weatherDataPath = './data/weatherfiles';
-module.exports = {weatherDataPath};
+export const weatherDataPath = './data/weatherfiles';

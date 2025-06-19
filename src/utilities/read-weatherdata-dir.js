@@ -1,10 +1,13 @@
-const fs = require("fs");
-const path = require("./constants");
+import { promises as fs } from "fs";
+import { weatherDataPath } from "./constants.js";
 
-fs.readdir(path.weatherDataPath, (err, files) => {
-  console.log(typeof files);
-  if (err) {
+export async function GetWeatherFilesByYear(year) {
+  try {
+    const files = await fs.readdir(weatherDataPath);
+    const filteredWeatherFiles = files.filter((file) => file.includes(year));
+    return filteredWeatherFiles;
+  } catch (err) {
     console.error("Error reading directory:", err);
-    return;
+    return [];
   }
-});
+}

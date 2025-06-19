@@ -1,5 +1,4 @@
 import { main } from "./src/main.js";
 
-main(process.argv);
+await main(process.argv);
 
-//main("Salman")
