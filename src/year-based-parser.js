@@ -1,10 +1,10 @@
-import { ParseWeatherData } from "./parser.js";
+import { parseWeatherData } from "./parser.js";
 
-export async function ParsingYearData(yearWeatherFiles) {
+export async function parsingYearData(yearWeatherFiles) {
   const yearWeatherReadings = [];
 
   for (let file of yearWeatherFiles) {
-    let reading = await ParseWeatherData(file);
+    let reading = await parseWeatherData(file);
     yearWeatherReadings.push(reading);
   }
   return yearWeatherReadings

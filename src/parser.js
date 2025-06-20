@@ -2,7 +2,7 @@ import fs from "fs/promises";
 
 const weatherReadings = [];
 
-export async function ParseWeatherData(fileName) {
+export async function parseWeatherData(fileName) {
   let path= `data/weatherfiles/${fileName}`
   try {
     const data = await fs.readFile(path, "utf8");

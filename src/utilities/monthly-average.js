@@ -1,8 +1,8 @@
-export function AverageMaxTemperature(weatherData) {
+export function averageMaxTemperature(weatherData) {
     let sumMaxTemp = 0;
     let maxTemperatures = [];
     let averageMaxTemperature = 0;
-    
+
     for (let i = 0; i < weatherData.length; i++) {
         weatherData[i].forEach((value, key) => {
             if (key === "Max TemperatureC") {
@@ -19,7 +19,7 @@ export function AverageMaxTemperature(weatherData) {
     return averageMaxTemperature;
 }
 
-export function AverageLowestTemperature(weatherData) {
+export function averageLowestTemperature(weatherData) {
     let sumMinTemp = 0;
     let minTemperatures = [];
     let averageMinTemperature = 0;
@@ -40,7 +40,7 @@ export function AverageLowestTemperature(weatherData) {
     return averageMinTemperature;
 }
 
-export function AverageMeanHumidity(weatherData) {
+export function averageMeanHumidity(weatherData) {
     let sumMeanHumidity = 0;
     let meanHumidities = [];
     let averageMeanHumidity = 0;

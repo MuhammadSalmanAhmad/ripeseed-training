@@ -1,11 +1,11 @@
 import { extremeValuesReport } from "../reports/extreme-values-report.js";
 import {
-    MaxTempInYear,
-    MaxHumidDayInYear,
-    LowestTempInYear,
+    maxTempInYear as maxTempInYear,
+    maxHumidDayInYear as maxHumidDayInYear,
+    lowestTempInYear as lowestTempInYear,
 } from "./extreme-calculation.js";
 
-export function YearExtremeValues(yearWeatherReading) {
+export function yearExtremeValues(yearWeatherReading) {
     const maxTemperatures = [];
     const lowestTemperatures = [];
     const maxHumidityValues = [];
@@ -29,8 +29,8 @@ export function YearExtremeValues(yearWeatherReading) {
             maxHumidityValues.push(maxHumidity);
         }
     }
-    maxHumidity = MaxHumidDayInYear(maxHumidityValues);
-    minTemp = LowestTempInYear(lowestTemperatures);
-    maxTemp = MaxTempInYear(maxTemperatures);
+    maxHumidity = maxHumidDayInYear(maxHumidityValues);
+    minTemp = lowestTempInYear(lowestTemperatures);
+    maxTemp = maxTempInYear(maxTemperatures);
     extremeValuesReport(maxHumidity, maxTemp, minTemp);
 }

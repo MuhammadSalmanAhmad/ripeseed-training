@@ -1,12 +1,12 @@
 import { getMonthName } from "./utilities/get-monthname.js";
-import { ParseWeatherData } from "./parser.js";
+import { parseWeatherData } from "./parser.js";
 import {
-    ChartReportGenerator,
-    MonthlyAverageReportGenerator,
+    chartReportGenerator,
+    monthlyAverageReportGenerator,
 } from "./reports/report-generator.js";
-import { GetWeatherFilesByYear } from "./utilities/read-weatherdata-dir.js";
-import { ParsingYearData } from "./year-based-parser.js";
-import { YearExtremeValues } from "./utilities/extreme-values.js";
+import { getWeatherFilesByYear } from "./utilities/read-weatherdata-dir.js";
+import { parsingYearData } from "./year-based-parser.js";
+import { yearExtremeValues } from "./utilities/extreme-values.js";
 
 export async function main(argv) {
     const [, , reportType, monthAndYear] = argv;
@@ -24,27 +24,27 @@ export async function main(argv) {
                 case "-a":
                     // Try to implement DRY principle here
                     if (argv[i + 1].includes("/")) {
-                        weatherData = await GetWeatherData(argv[i + 1]);
-                        MonthlyAverageReportGenerator(weatherData);
+                        weatherData = await getWeatherData(argv[i + 1]);
+                        monthlyAverageReportGenerator(weatherData);
                     }
                     break
                 case "-c":
                     if (argv[i + 1].includes("/")) {
-                        weatherData = await GetWeatherData(argv[i + 1]);
-                        ChartReportGenerator(weatherData);
+                        weatherData = await getWeatherData(argv[i + 1]);
+                        chartReportGenerator(weatherData);
                     }
                     break
                 case "-e":
-                    yearBasedFiles = await GetWeatherFilesByYear(argv[i + 1]);
-                    yearWeatherReadings = await ParsingYearData(yearBasedFiles);
-                    YearExtremeValues(yearWeatherReadings);
+                    yearBasedFiles = await getWeatherFilesByYear(argv[i + 1]);
+                    yearWeatherReadings = await parsingYearData(yearBasedFiles);
+                    yearExtremeValues(yearWeatherReadings);
                     break
             }
         }
     }
 }
 
-async function GetWeatherData(argv) {
+async function getWeatherData(argv) {
     let parts;
     let year;
     let month;
@@ -56,5 +56,5 @@ async function GetWeatherData(argv) {
     month = parts[1];
     monthName = getMonthName(Number(month));
     fileName = `Murree_weather_${year}_${monthName}.txt`;
-    return await ParseWeatherData(fileName);
+    return await parseWeatherData(fileName);
 }

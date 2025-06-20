@@ -1,9 +1,9 @@
 //METHODS TO PERFORM CALCULATION FOR EXTREME-VALUE REPORT BEING CALLED IN extreme-value.js
 
-export function MaxTempInYear(maxTemperatures) {
+export function maxTempInYear(maxTemperatures) {
     let maxtemp = -Infinity;
     let date;
-    
+
     for (let data of maxTemperatures) {
         if (Number(data.get("Temperature")) > maxtemp) {
             maxtemp = Number(data.get("Temperature"));
@@ -19,7 +19,7 @@ export function MaxTempInYear(maxTemperatures) {
     return { date, maxtemp };
 }
 
-export function LowestTempInYear(lowestTemperatures) {
+export function lowestTempInYear(lowestTemperatures) {
     let minTemp = +Infinity;
     let date;
 
@@ -40,7 +40,7 @@ export function LowestTempInYear(lowestTemperatures) {
     return { date, minTemp };
 }
 
-export function MaxHumidDayInYear(maxHumidityValues) {
+export function maxHumidDayInYear(maxHumidityValues) {
     let maxHumidity = -Infinity;
     let date;
 

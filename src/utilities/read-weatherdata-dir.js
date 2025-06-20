@@ -1,7 +1,7 @@
 import { promises as fs } from "fs";
 import { weatherDataPath } from "./constants.js";
 
-export async function GetWeatherFilesByYear(year) {
+export async function getWeatherFilesByYear(year) {
   try {
     const files = await fs.readdir(weatherDataPath);
     const filteredWeatherFiles = files.filter((file) => file.includes(year));
