@@ -4,6 +4,7 @@ import {
     averageMaxTemperature,
     averageMeanHumidity,
 } from "../utilities/monthly-average.js";
+import { getMonthName } from "../utilities/get-monthname.js";
 
 export function monthlyAverageReportGenerator(weatherData) {
     console.log(`Highest Average : ${averageMaxTemperature(weatherData)} C `);
@@ -30,11 +31,15 @@ export function chartReportGenerator(weatherData) {
     );
 }
 
-export function printDailyTemperatureExtremes(weatherData) {
+export function printDailyTemperatureExtremes(weatherData, monthAndYear) {
     let maxTemps = maxTemperatures(weatherData)
     let minTemps = minTemperatures(weatherData)
+    let [year,month] = monthAndYear.split("/")
+
+    console.log(`${getMonthName(Number(month))} ${year}`)
 
     for (let value of maxTemps) {
+        if (value === "") continue
         console.log(
             "\x1b[31m" +
             "*".repeat(value) +
@@ -45,6 +50,7 @@ export function printDailyTemperatureExtremes(weatherData) {
     }
 
     for (let value of minTemps) {
+        if (value === "") continue
         console.log(
             "\x1b[34m" +
             "*".repeat(value) +
@@ -53,6 +59,4 @@ export function printDailyTemperatureExtremes(weatherData) {
             "\x1b[0m"
         );
     }
-
-
 }

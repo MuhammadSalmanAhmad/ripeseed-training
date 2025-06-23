@@ -3,8 +3,8 @@ export function averageMaxTemperature(weatherData) {
     let maxTemperatures = [];
     let averageMaxTemperature = 0;
 
-    for (let i = 0; i < weatherData.length; i++) {
-        weatherData[i].forEach((value, key) => {
+    for (let data of weatherData) {
+        data.forEach((value, key) => {
             if (key === "Max TemperatureC") {
                 maxTemperatures.push(value);
             }
@@ -24,8 +24,8 @@ export function averageLowestTemperature(weatherData) {
     let minTemperatures = [];
     let averageMinTemperature = 0;
 
-    for (let i = 0; i < weatherData.length; i++) {
-        weatherData[i].forEach((value, key) => {
+    for (let data of weatherData) {
+        data.forEach((value, key) => {
             if (key === "Min TemperatureC") {
                 minTemperatures.push(value);
             }
@@ -45,8 +45,8 @@ export function averageMeanHumidity(weatherData) {
     let meanHumidities = [];
     let averageMeanHumidity = 0;
 
-    for (let i = 0; i < weatherData.length; i++) {
-        weatherData[i].forEach((value, key) => {
+    for (let data of weatherData) {
+        data.forEach((value, key) => {
             if (key === " Mean Humidity") {
                 meanHumidities.push(value);
             }

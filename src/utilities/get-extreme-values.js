@@ -3,7 +3,7 @@ import {
     maxTempInYear as maxTempInYear,
     maxHumidDayInYear as maxHumidDayInYear,
     lowestTempInYear as lowestTempInYear,
-} from "./extreme-calculation.js";
+} from "./extreme-values-calculation.js";
 
 export function yearExtremeValues(yearWeatherReading) {
     const maxTemperatures = [];
@@ -33,4 +33,6 @@ export function yearExtremeValues(yearWeatherReading) {
     minTemp = lowestTempInYear(lowestTemperatures);
     maxTemp = maxTempInYear(maxTemperatures);
     extremeValuesReport(maxHumidity, maxTemp, minTemp);
+    
 }
+
