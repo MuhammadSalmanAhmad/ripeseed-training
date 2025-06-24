@@ -1,6 +1,5 @@
 import fs from "fs/promises";
 
-
 export async function parseWeatherData(fileName) {
   let path = `data/weatherfiles/${fileName}`;
   const weatherReadings = [];
@@ -16,9 +15,9 @@ export async function parseWeatherData(fileName) {
       const values = line.split(",");
       const weatherData = new Map();
       for (let key of keys) {
-        weatherData.set(key, values[keys.indexOf(key)])
+        weatherData.set(key, values[keys.indexOf(key)]);
       }
-      weatherReadings.push(weatherData)
+      weatherReadings.push(weatherData);
     }
     return weatherReadings;
   } catch (err) {
@@ -27,3 +26,12 @@ export async function parseWeatherData(fileName) {
   }
 }
 
+export async function parseYearData(yearWeatherFiles) {
+  const yearWeatherReadings = [];
+
+  for (let file of yearWeatherFiles) {
+    let reading = await parseWeatherData(file);
+    yearWeatherReadings.push(reading);
+  }
+  return yearWeatherReadings;
+}
