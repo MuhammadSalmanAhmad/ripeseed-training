@@ -1,8 +1,12 @@
-//METHODS TO PERFORM CALCULATION FOR EXTREME-VALUE REPORT
+import {
+  calculateAverage,
+  extractValuesByKey,
+} from "../utilities/calculation-functions.js";
 
+//METHODS TO PERFORM CALCULATION FOR EXTREME-VALUE REPORT
 export function maxTempInYear(maxTemperatures) {
   let date;
-  
+
   const maxtemp = maxTemperatures.reduce((Max, item) => {
     let temp = Number(item.Temperature);
     if (temp > Max) {
@@ -67,7 +71,7 @@ export function yearExtremeValues(yearWeatherReading) {
       });
     }
   }
-  
+
   const maxHumidity = maxHumidDayInYear(maxHumidityValues);
   const minTemp = lowestTempInYear(lowestTemperatures);
   const maxTemp = maxTempInYear(maxTemperatures);
@@ -79,90 +83,32 @@ export function yearExtremeValues(yearWeatherReading) {
 
 export function maxTemperatures(weatherData) {
   let maxTemperatures = [];
-
-  for (let data of weatherData) {
-    data.forEach((value, key) => {
-      if (key === "Max TemperatureC") {
-        maxTemperatures.push(value);
-      }
-    });
-  }
+  extractValuesByKey("Max TemperatureC", maxTemperatures, weatherData);
   return maxTemperatures;
 }
 
 export function minTemperatures(weatherData) {
   let minTemperatures = [];
-
-  for (let data of weatherData) {
-    data.forEach((value, key) => {
-      if (key === "Min TemperatureC") {
-        minTemperatures.push(value);
-      }
-    });
-  }
+  extractValuesByKey("Min TemperatureC", minTemperatures, weatherData);
   return minTemperatures;
 }
 
 //METHODS FOR MONTHLY AVERAGE CALCULATIONS.
 
 export function averageMaxTemperature(weatherData) {
-  let sumMaxTemp = 0;
-  let maxTemperatures = [];
   let averageMaxTemperature = 0;
-
-  for (let data of weatherData) {
-    data.forEach((value, key) => {
-      if (key === "Max TemperatureC") {
-        maxTemperatures.push(value);
-      }
-    });
-  }
-
-  for (let element of maxTemperatures) {
-    sumMaxTemp = sumMaxTemp + Number(element);
-  }
-
-  averageMaxTemperature = sumMaxTemp / maxTemperatures.length;
+  averageMaxTemperature = calculateAverage("Max TemperatureC", weatherData);
   return averageMaxTemperature;
 }
 
 export function averageLowestTemperature(weatherData) {
-  let sumMinTemp = 0;
-  let minTemperatures = [];
   let averageMinTemperature = 0;
-
-  for (let data of weatherData) {
-    data.forEach((value, key) => {
-      if (key === "Min TemperatureC") {
-        minTemperatures.push(value);
-      }
-    });
-  }
-
-  for (let element of minTemperatures) {
-    sumMinTemp = sumMinTemp + Number(element);
-  }
-
-  averageMinTemperature = sumMinTemp / minTemperatures.length;
+  averageMinTemperature = calculateAverage("Min TemperatureC", weatherData);
   return averageMinTemperature;
 }
 
 export function averageMeanHumidity(weatherData) {
-  let sumMeanHumidity = 0;
-  let meanHumidities = [];
   let averageMeanHumidity = 0;
-
-  for (let data of weatherData) {
-    data.forEach((value, key) => {
-      if (key === " Mean Humidity") {
-        meanHumidities.push(value);
-      }
-    });
-  }
-
-  for (let element of meanHumidities) {
-    sumMeanHumidity = sumMeanHumidity + Number(element);
-  }
-  averageMeanHumidity = sumMeanHumidity / meanHumidities.length;
+  averageMeanHumidity = calculateAverage("Mean Humidity", weatherData);
   return averageMeanHumidity;
 }

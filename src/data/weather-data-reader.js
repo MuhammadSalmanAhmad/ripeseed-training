@@ -1,5 +1,5 @@
 import { getMonthName } from "../utilities/get-month-details.js";
-import { parseWeatherData } from "../parsers/parser.js";
+import { fileParser } from "../parsers/parser.js";
 import { promises as fs } from "fs";
 import { weatherDataPath } from "../utilities/constants.js";
 
@@ -23,6 +23,6 @@ export async function getWeatherData(argv) {
 
   monthName = getMonthName(month);
   fileName = `Murree_weather_${year}_${monthName}.txt`;
-  return await parseWeatherData(fileName);
+  return await fileParser(fileName);
 }
 
