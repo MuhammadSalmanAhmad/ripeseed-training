@@ -45,17 +45,20 @@ export function parseCSVData(data) {
 
 //function for validating structured data
 export function validateData(weatherData) {
-  //data structure for validated data is array of map objects
   let validatedData = [];
   for (let item of weatherData) {
+    const maxTemp = item.get("Max TemperatureC");
+    const minTemp = item.get("Min TemperatureC");
+    const meanHumidity = item.get("Mean Humidity");
+
     if (
-      item.get("Max TemperatureC") ||
-      item.get("Min TemperatureC") ||
-      item.get("Mean Humidity") !== ""
+      maxTemp !== undefined && maxTemp !== null && maxTemp !== "" &&
+      minTemp !== undefined && minTemp !== null && minTemp !== "" &&
+      meanHumidity !== undefined && meanHumidity !== null && meanHumidity !== ""
     ) {
       validatedData.push(item);
     }
   }
-
+  console.log(validatedData, validatedData.length)
   return validatedData;
 }
