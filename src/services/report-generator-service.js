@@ -5,7 +5,7 @@ import {
   averageMaxTemperature,
   averageMeanHumidity,
   yearExtremeValues,
-} from "../calculations/calculations.js";
+} from "./calculation-service.js";
 import { getMonthName, getDayOfMonth } from "../utilities/get-month-details.js";
 
 export function monthlyAverageReportGenerator(weatherData) {
@@ -41,14 +41,12 @@ export function printDailyTemperatureExtremes(weatherData, monthAndYear) {
   console.log(`${getMonthName(month)} ${year}`);
 
   for (let value of maxTemps) {
-    if (value === "") continue;
     console.log(
       "\x1b[31m" + "*".repeat(value) + " " + `${value} C` + "\x1b[0m"
     );
   }
 
   for (let value of minTemps) {
-    if (value === "") continue;
     console.log(
       "\x1b[34m" + "*".repeat(value) + " " + `${value} C` + "\x1b[0m"
     );

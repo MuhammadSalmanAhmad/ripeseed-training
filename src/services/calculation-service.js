@@ -1,7 +1,7 @@
 import {
   calculateAverage,
   extractValuesByKey,
-} from "../utilities/calculation-functions.js";
+} from "../utilities/calculation-service-utilities.js";
 
 //METHODS TO PERFORM CALCULATION FOR EXTREME-VALUE REPORT
 export function maxTempInYear(maxTemperatures) {
