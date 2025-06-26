@@ -1,7 +1,7 @@
 import {
   calculateAverage,
   extractValuesByKey,
-} from "../utilities/calculation-service-utilities.js";
+} from "./utilities.js";
 
 //METHODS TO PERFORM CALCULATION FOR EXTREME-VALUE REPORT
 export function maxTempInYear(maxTemperatures) {
@@ -49,6 +49,7 @@ export function maxHumidDayInYear(maxHumidityValues) {
 }
 
 export function yearExtremeValues(yearWeatherReading) {
+
   const maxTemperatures = [];
   const lowestTemperatures = [];
   const maxHumidityValues = [];
@@ -79,7 +80,7 @@ export function yearExtremeValues(yearWeatherReading) {
   return [maxHumidity, maxTemp, minTemp];
 }
 
-//METHODS FOR CHART REPORT CALCULATION
+//METHODS FOR MONTHLY CHART REPORT CALCULATION 
 
 export function maxTemperatures(weatherData) {
   let maxTemperatures = [];

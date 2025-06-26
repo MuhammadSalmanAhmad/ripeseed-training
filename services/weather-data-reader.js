@@ -1,7 +1,6 @@
-import { getMonthName } from "../utilities/get-month-details.js";
-import { fileParser } from "./parser-service.js";
+import { getMonthName } from "./utilities.js";
 import { promises as fs } from "fs";
-import { weatherDataPath } from "../utilities/constants.js";
+import { weatherDataPath } from "../constants.js";
 
 export async function getWeatherFilesByYear(year) {
   try {
@@ -14,10 +13,10 @@ export async function getWeatherFilesByYear(year) {
   }
 }
 
-export async function getWeatherData(argv) {
+export  function getWeatherFile(argv) {
   //making use of array destructring
   let [year, month] = argv.split("/");
   let monthName = getMonthName(month);
   let fileName = `Murree_weather_${year}_${monthName}.txt`;
-  return await fileParser(fileName);
+  return  fileName
 }

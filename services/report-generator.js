@@ -1,22 +1,16 @@
-import {
-  maxTemperatures,
-  minTemperatures,
-  averageLowestTemperature,
-  averageMaxTemperature,
-  averageMeanHumidity,
-  yearExtremeValues,
-} from "./calculation-service.js";
-import { getMonthName, getDayOfMonth } from "../utilities/get-month-details.js";
+import { getMonthName, getDayOfMonth } from "./utilities.js";
 
-export function monthlyAverageReportGenerator(weatherData) {
-  console.log(`Highest Average : ${averageMaxTemperature(weatherData)} C `);
-  console.log(`Lowest Average : ${averageLowestTemperature(weatherData)} C`);
-  console.log(`Average Mean Humidity : ${averageMeanHumidity(weatherData)} %`);
+export function monthlyAverageReportGenerator(
+  avgMaxTemp,
+  avgLowestTemp,
+  avgMeanHumidity
+) {
+  console.log(`Highest Average : ${avgMaxTemp} C `);
+  console.log(`Lowest Average : ${avgLowestTemp} C`);
+  console.log(`Average Mean Humidity : ${avgMeanHumidity} %`);
 }
 
-export function chartReportGenerator(weatherData) {
-  let highestAverageTemp = averageMaxTemperature(weatherData);
-  let lowestAverageTemp = averageLowestTemperature(weatherData);
+export function chartReportGenerator(highestAverageTemp, lowestAverageTemp) {
   console.log(
     "\x1b[31m" +
       "*".repeat(highestAverageTemp) +
@@ -33,9 +27,11 @@ export function chartReportGenerator(weatherData) {
   );
 }
 
-export function printDailyTemperatureExtremes(weatherData, monthAndYear) {
-  let maxTemps = maxTemperatures(weatherData);
-  let minTemps = minTemperatures(weatherData);
+export function printDailyTemperatureExtremes(
+  maxTemps,
+  minTemps,
+  monthAndYear
+) {
   let [year, month] = monthAndYear.split("/");
 
   console.log(`${getMonthName(month)} ${year}`);
@@ -53,9 +49,7 @@ export function printDailyTemperatureExtremes(weatherData, monthAndYear) {
   }
 }
 
-export function extremeValuesReport(yearWeatherReadings) {
-  let [maxHumidity, maxTemp, minTemp] = yearExtremeValues(yearWeatherReadings);
-
+export function extremeValuesReport(maxHumidity, maxTemp, minTemp) {
   console.log(
     ` Highest: ${maxTemp["maxtemp"]}C on ${getMonthName(
       maxTemp["date"]
