@@ -1,12 +1,12 @@
 import { getMonthName, getDayOfMonth } from "./utilities.js";
 
-export function monthlyAverageReportGenerator(
+export function monthlyAverageReportGenerator({
   avgMaxTemp,
-  avgLowestTemp,
-  avgMeanHumidity
+  avgMinTemp,
+  avgMeanHumidity,}
 ) {
   console.log(`Highest Average : ${avgMaxTemp} C `);
-  console.log(`Lowest Average : ${avgLowestTemp} C`);
+  console.log(`Lowest Average : ${avgMinTemp} C`);
   console.log(`Average Mean Humidity : ${avgMeanHumidity} %`);
 }
 
@@ -50,7 +50,6 @@ export function printDailyTemperatureExtremes(
 }
 
 export function extremeValuesReport([maxHumidity, maxTemp, minTemp]) {
-
   console.log(
     ` Highest: ${maxTemp["maxtemp"]}C on ${getMonthName(
       maxTemp["date"]

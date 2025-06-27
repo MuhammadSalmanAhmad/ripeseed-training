@@ -10,13 +10,14 @@ import {
 } from "./services/weather-data-reader.js";
 import { fileParser, parseYearData } from "./services/parser.js";
 import {
-  averageMaxTemperature,
-  averageLowestTemperature,
-  averageMeanHumidity,
+  // averageMaxTemperature,
+  // averageLowestTemperature,
+  // averageMeanHumidity,
   maxTemperatures,
   minTemperatures,
   yearExtremeValues,
 } from "./services/calculations.js";
+import { getWeatherRecords } from "./services/utilities.js";
 
 export async function main(args) {
   for (let key in args) {
@@ -24,11 +25,7 @@ export async function main(args) {
       case "a": {
         let fileName = getWeatherFile(args.a);
         let weatherData = await fileParser(args._[0], fileName);
-        monthlyAverageReportGenerator(
-          averageMaxTemperature(weatherData),
-          averageLowestTemperature(weatherData),
-          averageMeanHumidity(weatherData)
-        );
+        monthlyAverageReportGenerator(getWeatherRecords(weatherData));
         break;
       }
       case "c": {
@@ -43,7 +40,10 @@ export async function main(args) {
       }
       case "e": {
         let yearBasedFiles = await getWeatherFilesByYear(args._[0], args.e);
-        let yearWeatherReadings = await parseYearData(args._[0], yearBasedFiles);
+        let yearWeatherReadings = await parseYearData(
+          args._[0],
+          yearBasedFiles
+        );
         extremeValuesReport(yearExtremeValues(yearWeatherReadings));
         break;
       }

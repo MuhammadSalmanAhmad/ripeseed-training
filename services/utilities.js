@@ -1,3 +1,9 @@
+import {
+  averageMaxTemperature,
+  averageLowestTemperature,
+  averageMeanHumidity,
+} from "./calculations.js";
+
 export function calculateAverage(keyType, weatherData) {
   let count = 0;
   const sum = weatherData.reduce((sum, item) => {
@@ -31,4 +37,12 @@ export function getDayOfMonth(value) {
   const date = new Date(value);
   const dayOfMonth = date.getDate();
   return dayOfMonth;
+}
+
+export function getWeatherRecords(weatherData) {
+  return {
+    avgMaxTemp:averageMaxTemperature(weatherData),
+    avgMinTemp:averageLowestTemperature(weatherData),
+    avgMeanHumidity:averageMeanHumidity(weatherData),
+  };
 }
