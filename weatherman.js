@@ -19,47 +19,37 @@ import {
 } from "./services/calculations.js";
 
 export async function main(args) {
-    
   for (let key in args) {
     switch (key) {
       case "a": {
         let fileName = getWeatherFile(args.a);
-        let weatherData = await fileParser(fileName);
-        let [avgMaxTemp, avgLowestTemp, avgMeanHumidity] = [
+        let weatherData = await fileParser(args._[0], fileName);
+        monthlyAverageReportGenerator(
           averageMaxTemperature(weatherData),
           averageLowestTemperature(weatherData),
-          averageMeanHumidity(weatherData),
-        ];
-        monthlyAverageReportGenerator(
-          avgMaxTemp,
-          avgLowestTemp,
-          avgMeanHumidity
+          averageMeanHumidity(weatherData)
         );
-
         break;
       }
       case "c": {
         let fileName = getWeatherFile(args.c);
-        let weatherData = await fileParser(fileName);
-        let [maxTemps, minTemps] = [
+        let weatherData = await fileParser(args._[0], fileName);
+        printDailyTemperatureExtremes(
           maxTemperatures(weatherData),
           minTemperatures(weatherData),
-        ];
-        printDailyTemperatureExtremes(maxTemps, minTemps, args.c);
+          args.c
+        );
         break;
       }
       case "e": {
-        let yearBasedFiles = await getWeatherFilesByYear(args.e);
-        let yearWeatherReadings = await parseYearData(yearBasedFiles);
-        let [maxHumidity, maxTemp, minTemp] =
-          yearExtremeValues(yearWeatherReadings);
-        extremeValuesReport(maxHumidity, maxTemp, minTemp);
+        let yearBasedFiles = await getWeatherFilesByYear(args._[0], args.e);
+        let yearWeatherReadings = await parseYearData(args._[0], yearBasedFiles);
+        extremeValuesReport(yearExtremeValues(yearWeatherReadings));
         break;
       }
     }
   }
 }
-
 // eslint-disable-next-line no-undef
 const args = Yargs(process.argv.slice(2));
 await main(args);

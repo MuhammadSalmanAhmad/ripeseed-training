@@ -1,7 +1,8 @@
 import fs from "fs/promises";
+//import {dirPath} from "../constants.js"
 
-export async function fileParser(fileName) {
-  let path = `data/weatherfiles/${fileName}`;
+export async function fileParser(dirPath, fileName) {
+  let path = `${dirPath}/${fileName}`;
 
   try {
     const rawData = await fs.readFile(path, "utf8");
@@ -13,10 +14,10 @@ export async function fileParser(fileName) {
   }
 }
 
-export async function parseYearData(yearWeatherFiles) {
+export async function parseYearData(dirPath, yearWeatherFiles) {
   const yearWeatherReadings = [];
   for (let file of yearWeatherFiles) {
-    let reading = await fileParser(file);
+    let reading = await fileParser(dirPath, file);
     yearWeatherReadings.push(reading);
   }
   return yearWeatherReadings;
