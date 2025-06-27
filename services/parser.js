@@ -1,5 +1,4 @@
 import fs from "fs/promises";
-//import {dirPath} from "../constants.js"
 
 export async function fileParser(dirPath, fileName) {
   let path = `${dirPath}/${fileName}`;

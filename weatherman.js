@@ -10,9 +10,6 @@ import {
 } from "./services/weather-data-reader.js";
 import { fileParser, parseYearData } from "./services/parser.js";
 import {
-  // averageMaxTemperature,
-  // averageLowestTemperature,
-  // averageMeanHumidity,
   maxTemperatures,
   minTemperatures,
   yearExtremeValues,
