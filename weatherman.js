@@ -27,10 +27,7 @@ export async function main(args) {
   if (args.compare) {
     const fileName = getWeatherFile(args.compare);
     const weatherData = await fileParser(dirPath, fileName);
-    generateChartReport(
-      chartReportCalculator(weatherData),
-      args.compare
-    );
+    generateChartReport(chartReportCalculator(weatherData),args.compare);
   }
 
   if (args.extreme) {
@@ -39,7 +36,6 @@ export async function main(args) {
     generateExtremeReport(yearExtremeCalculator(yearWeatherReadings))
   }
 }
-
 // eslint-disable-next-line no-undef
 const args = yargs(hideBin(process.argv))
   .option("average", {

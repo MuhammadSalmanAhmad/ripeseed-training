@@ -25,7 +25,7 @@ export async function parseYearData(dirPath, yearWeatherFiles) {
 export function parseCSVData(data) {
   const parsedData = [];
   const lines = data.split("\n");
-
+  
   if (lines.length === 0) return [];
   let keys = lines[0].split(",");
   lines.slice(1).forEach((line) => {

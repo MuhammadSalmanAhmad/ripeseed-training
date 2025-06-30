@@ -21,7 +21,7 @@ export function generateChartReport([maxTemps, minTemps], monthAndYear) {
 }
 
 export function generateExtremeReport([maxHumidity, maxTemp, minTemp]) {
-  console.log(maxHumidity, maxTemp, minTemp);
+  
   console.log(
     ` Highest: ${maxTemp.maxtemp}C on ${getMonthName(
       maxTemp["date"]

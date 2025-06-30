@@ -61,8 +61,7 @@ export function yearExtremeCalculator(yearWeatherReading) {
   return [
     maxHumidDayInYear(extremeValues.map((value) => value.maxHumidity)),
     maxTempInYear(extremeValues.map((value) => value.maxTemp)),
-    lowestTempInYear(extremeValues.map((value) => value.minTemp)),
-    
+    lowestTempInYear(extremeValues.map((value) => value.minTemp))
   ];
 }
 
