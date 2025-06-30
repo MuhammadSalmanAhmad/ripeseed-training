@@ -1,57 +1,29 @@
-import { getMonthName, getDayOfMonth } from "./utilities.js";
+import { getMonthName, getDayOfMonth } from "./utils.js";
 
-export function monthlyAverageReportGenerator({
-  avgMaxTemp,
-  avgMinTemp,
-  avgMeanHumidity,}
-) {
+export function generateAvgReport({ avgMaxTemp, avgMinTemp, avgMeanHumidity }) {
   console.log(`Highest Average : ${avgMaxTemp} C `);
   console.log(`Lowest Average : ${avgMinTemp} C`);
   console.log(`Average Mean Humidity : ${avgMeanHumidity} %`);
 }
 
-export function chartReportGenerator(highestAverageTemp, lowestAverageTemp) {
-  console.log(
-    "\x1b[31m" +
-      "*".repeat(highestAverageTemp) +
-      " " +
-      `${highestAverageTemp} C` +
-      "\x1b[0m"
-  );
-  console.log(
-    "\x1b[34m" +
-      "*".repeat(lowestAverageTemp) +
-      " " +
-      `${lowestAverageTemp} C` +
-      "\x1b[0m"
-  );
-}
-
-export function printDailyTemperatureExtremes(
-  maxTemps,
-  minTemps,
-  monthAndYear
-) {
+export function generateChartReport([maxTemps, minTemps], monthAndYear) {
   let [year, month] = monthAndYear.split("/");
-
   console.log(`${getMonthName(month)} ${year}`);
 
-  for (let value of maxTemps) {
-    console.log(
-      "\x1b[31m" + "*".repeat(value) + " " + `${value} C` + "\x1b[0m"
-    );
-  }
+  maxTemps.forEach((value) =>
+    console.log("\x1b[31m" + "*".repeat(Math.abs(value)) + " " + `${value} C` + "\x1b[0m")
+  );
 
-  for (let value of minTemps) {
-    console.log(
-      "\x1b[34m" + "*".repeat(value) + " " + `${value} C` + "\x1b[0m"
-    );
-  }
+  minTemps.forEach((value) =>
+    // eslint-disable-next-line no-undef
+    console.log("\x1b[34m" + "*".repeat(Math.abs(value)) + " " + `${value} C` + "\x1b[0m")
+  );
 }
 
-export function extremeValuesReport([maxHumidity, maxTemp, minTemp]) {
+export function generateExtremeReport([maxHumidity, maxTemp, minTemp]) {
+  console.log(maxHumidity, maxTemp, minTemp);
   console.log(
-    ` Highest: ${maxTemp["maxtemp"]}C on ${getMonthName(
+    ` Highest: ${maxTemp.maxtemp}C on ${getMonthName(
       maxTemp["date"]
     )} ${getDayOfMonth(maxTemp["date"])}`
   );
@@ -64,7 +36,7 @@ export function extremeValuesReport([maxHumidity, maxTemp, minTemp]) {
 
   console.log(
     ` Humidity: ${maxHumidity["maxHumidity"]}% on ${getMonthName(
-      maxTemp["date"]
+      maxHumidity["date"]
     )} ${getDayOfMonth(maxHumidity["date"])} `
   );
 }

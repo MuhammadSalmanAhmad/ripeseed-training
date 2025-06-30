@@ -1,9 +1,3 @@
-import {
-  averageMaxTemperature,
-  averageLowestTemperature,
-  averageMeanHumidity,
-} from "./calculations.js";
-
 export function calculateAverage(keyType, weatherData) {
   let count = 0;
   const sum = weatherData.reduce((sum, item) => {
@@ -16,14 +10,16 @@ export function calculateAverage(keyType, weatherData) {
   return avg;
 }
 
-export function extractValuesByKey(keyType, tempArray, weatherData) {
-  for (let data of weatherData) {
-    data.forEach((value, key) => {
+export function extractValuesByKey(keyType, weatherData) {
+  let tempArray = []
+  weatherData.forEach((data)=>{
+     data.forEach((value, key) => {
       if (key === keyType) {
         tempArray.push(value);
       }
     });
-  }
+  })
+  return tempArray
 }
 
 /* eslint-disable no-unused-vars */
@@ -37,12 +33,4 @@ export function getDayOfMonth(value) {
   const date = new Date(value);
   const dayOfMonth = date.getDate();
   return dayOfMonth;
-}
-
-export function getWeatherRecords(weatherData) {
-  return {
-    avgMaxTemp:averageMaxTemperature(weatherData),
-    avgMinTemp:averageLowestTemperature(weatherData),
-    avgMeanHumidity:averageMeanHumidity(weatherData),
-  };
 }

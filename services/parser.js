@@ -5,14 +5,13 @@ export async function fileParser(dirPath, fileName) {
 
   try {
     const rawData = await fs.readFile(path, "utf8");
-    let validatedData = validateData(parseCSVData(rawData));
-    return validatedData;
+    return validateData(parseCSVData(rawData));
   } catch (err) {
     console.error("Error reading file:", err.toString());
     throw err;
   }
 }
-
+//forEach does not wait for async calls hence going with for..of loop although we can use promises 
 export async function parseYearData(dirPath, yearWeatherFiles) {
   const yearWeatherReadings = [];
   for (let file of yearWeatherFiles) {
@@ -44,25 +43,15 @@ export function parseCSVData(data) {
 
 //function for validating structured data
 export function validateData(weatherData) {
-  let validatedData = [];
-  weatherData.forEach((item) => {
-    const maxTemp = item.get("Max TemperatureC");
-    const minTemp = item.get("Min TemperatureC");
-    const meanHumidity = item.get("Mean Humidity");
-
+  let validatedData = weatherData.filter(checkNullOrEmpty);
+  function checkNullOrEmpty(item) {
     if (
-      maxTemp !== undefined &&
-      maxTemp !== null &&
-      maxTemp !== "" &&
-      minTemp !== undefined &&
-      minTemp !== null &&
-      minTemp !== "" &&
-      meanHumidity !== undefined &&
-      meanHumidity !== null &&
-      meanHumidity !== ""
+      item.get("Max TemperatureC") !== "" &&
+      item.get("Min TemperatureC") !== "" &&
+      item.get("Mean Humidity")!== ""
     ) {
-      validatedData.push(item);
+      return item;
     }
-  });
+  }
   return validatedData;
 }

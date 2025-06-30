@@ -1,8 +1,9 @@
-import Yargs from "yargs-parser";
+import yargs from "yargs";
+import { hideBin } from "yargs/helpers";
 import {
-  extremeValuesReport,
-  monthlyAverageReportGenerator,
-  printDailyTemperatureExtremes,
+  generateExtremeReport,
+  generateAvgReport,
+  generateChartReport,
 } from "./services/report-generator.js";
 import {
   getWeatherFilesByYear,
@@ -10,43 +11,52 @@ import {
 } from "./services/weather-data-reader.js";
 import { fileParser, parseYearData } from "./services/parser.js";
 import {
-  maxTemperatures,
-  minTemperatures,
-  yearExtremeValues,
+  avgRecordCalulator,
+  chartReportCalculator,
+  yearExtremeCalculator,
 } from "./services/calculations.js";
-import { getWeatherRecords } from "./services/utilities.js";
 
 export async function main(args) {
-  for (let key in args) {
-    switch (key) {
-      case "a": {
-        let fileName = getWeatherFile(args.a);
-        let weatherData = await fileParser(args._[0], fileName);
-        monthlyAverageReportGenerator(getWeatherRecords(weatherData));
-        break;
-      }
-      case "c": {
-        let fileName = getWeatherFile(args.c);
-        let weatherData = await fileParser(args._[0], fileName);
-        printDailyTemperatureExtremes(
-          maxTemperatures(weatherData),
-          minTemperatures(weatherData),
-          args.c
-        );
-        break;
-      }
-      case "e": {
-        let yearBasedFiles = await getWeatherFilesByYear(args._[0], args.e);
-        let yearWeatherReadings = await parseYearData(
-          args._[0],
-          yearBasedFiles
-        );
-        extremeValuesReport(yearExtremeValues(yearWeatherReadings));
-        break;
-      }
-    }
+  let dirPath = args._[0]
+  if (args.average) {
+    const fileName = getWeatherFile(args.average);
+    const weatherData = await fileParser(dirPath, fileName);
+    generateAvgReport(avgRecordCalulator(weatherData));
+  }
+
+  if (args.compare) {
+    const fileName = getWeatherFile(args.compare);
+    const weatherData = await fileParser(dirPath, fileName);
+    generateChartReport(
+      chartReportCalculator(weatherData),
+      args.compare
+    );
+  }
+
+  if (args.extreme) {
+    const yearBasedFiles = await getWeatherFilesByYear(dirPath, args.extreme);
+    const yearWeatherReadings = await parseYearData(dirPath, yearBasedFiles);
+    generateExtremeReport(yearExtremeCalculator(yearWeatherReadings))
   }
 }
+
 // eslint-disable-next-line no-undef
-const args = Yargs(process.argv.slice(2));
+const args = yargs(hideBin(process.argv))
+  .option("average", {
+    alias: "a",
+    type: "string",
+    describe: "Get average temperature of a specific month",
+  })
+  .option("compare", {
+    alias: "c",
+    type: "string",
+    describe: "Compare daily temperature extremes of a month",
+  })
+  .option("extreme", {
+    alias: "e",
+    type: "string",
+    describe: "Get yearly extreme temperature data",
+  })
+  .parse()
+
 await main(args);

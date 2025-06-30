@@ -1,4 +1,4 @@
-import { getMonthName } from "./utilities.js";
+import { getMonthName } from "./utils.js";
 import { promises as fs } from "fs";
 
 export async function getWeatherFilesByYear(weatherDataPath,year) {
@@ -20,3 +20,4 @@ export  function getWeatherFile(argv) {
   let fileName = `Murree_weather_${year}_${monthName}.txt`;
   return  fileName
 }
+
