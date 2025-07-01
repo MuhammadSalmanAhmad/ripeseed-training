@@ -15,27 +15,31 @@ import {
   chartReportCalculator,
   yearExtremeCalculator,
 } from "./services/calculations.js";
+import { validateAvgArg, validateCompareArg, validateExtremeArg } from "./services/validate-args.js";
 
-export async function main(args) {
-  let dirPath = args._[0]
+export const main = async (args) => {
+  let dirPath = args._[0];
   if (args.average) {
+    validateAvgArg(args.average)
     const fileName = getWeatherFile(args.average);
     const weatherData = await fileParser(dirPath, fileName);
     generateAvgReport(avgRecordCalulator(weatherData));
   }
 
   if (args.compare) {
+    validateCompareArg(args.compare)
     const fileName = getWeatherFile(args.compare);
     const weatherData = await fileParser(dirPath, fileName);
-    generateChartReport(chartReportCalculator(weatherData),args.compare);
+    generateChartReport(chartReportCalculator(weatherData), args.compare);
   }
 
   if (args.extreme) {
+    validateExtremeArg(args.extreme)
     const yearBasedFiles = await getWeatherFilesByYear(dirPath, args.extreme);
     const yearWeatherReadings = await parseYearData(dirPath, yearBasedFiles);
     generateExtremeReport(yearExtremeCalculator(yearWeatherReadings))
   }
-}
+};
 // eslint-disable-next-line no-undef
 const args = yargs(hideBin(process.argv))
   .option("average", {
@@ -53,6 +57,6 @@ const args = yargs(hideBin(process.argv))
     type: "string",
     describe: "Get yearly extreme temperature data",
   })
-  .parse()
+  .parse();
 
 await main(args);

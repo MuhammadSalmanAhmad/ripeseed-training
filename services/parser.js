@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 
-export async function fileParser(dirPath, fileName) {
+export const fileParser = async (dirPath, fileName) => {
   let path = `${dirPath}/${fileName}`;
 
   try {
@@ -10,22 +10,22 @@ export async function fileParser(dirPath, fileName) {
     console.error("Error reading file:", err.toString());
     throw err;
   }
-}
-//forEach does not wait for async calls hence going with for..of loop although we can use promises 
-export async function parseYearData(dirPath, yearWeatherFiles) {
+};
+//forEach does not wait for async calls hence going with for..of loop although we can use promises
+export const parseYearData = async (dirPath, yearWeatherFiles) => {
   const yearWeatherReadings = [];
   for (let file of yearWeatherFiles) {
     let reading = await fileParser(dirPath, file);
     yearWeatherReadings.push(reading);
   }
   return yearWeatherReadings;
-}
+};
 
 //function responsible only for parsing and structring data
-export function parseCSVData(data) {
+const parseCSVData = (data) => {
   const parsedData = [];
   const lines = data.split("\n");
-  
+
   if (lines.length === 0) return [];
   let keys = lines[0].split(",");
   lines.slice(1).forEach((line) => {
@@ -39,19 +39,20 @@ export function parseCSVData(data) {
   });
 
   return parsedData;
-}
+};
 
 //function for validating structured data
-export function validateData(weatherData) {
-  let validatedData = weatherData.filter(checkNullOrEmpty);
-  function checkNullOrEmpty(item) {
-    if (
-      item.get("Max TemperatureC") !== "" &&
-      item.get("Min TemperatureC") !== "" &&
-      item.get("Mean Humidity")!== ""
-    ) {
-      return item;
-    }
+const validateData = (weatherData) => {
+  return weatherData.filter(validateRecords);
+};
+
+const validateRecords= (item)=> {
+  if (
+    item.get("Max TemperatureC") !== "" &&
+    item.get("Min TemperatureC") !== "" &&
+    item.get("Mean Humidity") !== "" &&
+    (item.get("PKST") !== "" || item.get("PKT") !== "")
+  ) {
+    return item;
   }
-  return validatedData;
 }
