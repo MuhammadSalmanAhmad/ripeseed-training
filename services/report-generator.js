@@ -30,20 +30,20 @@ export const generateChartReport = ([maxTemps, minTemps], monthAndYear) => {
 
 export const generateExtremeReport = ([maxTemp, minTemp, maxHumidity]) => {
   console.log(
-    ` Highest: ${maxTemp.value}C on ${getMonthName(
-      maxTemp.Date
-    )} ${getDayOfMonth(maxTemp.Date)}`
+    ` Highest: ${maxTemp["Max TemperatureC"]}C on ${getMonthName(
+      maxTemp.PKST || maxTemp.PKT
+    )} ${getDayOfMonth(maxTemp.PKST || maxTemp.PKT)}`
   );
 
   console.log(
-    ` Lowest: ${minTemp.value}C on ${getMonthName(
-      minTemp.Date
-    )} ${getDayOfMonth(minTemp.Date)}`
+    ` Lowest: ${minTemp["Min TemperatureC"]}C on ${getMonthName(
+      minTemp.PKST || minTemp.PKT
+    )} ${getDayOfMonth(minTemp.PKST || minTemp.PKT)}`
   );
 
   console.log(
-    ` Humidity: ${maxHumidity.value}% on ${getMonthName(
-      maxHumidity.Date
-    )} ${getDayOfMonth(maxHumidity.Date)} `
+    ` Humidity: ${maxHumidity["Max Humidity"]}% on ${getMonthName(
+      maxHumidity.PKST || maxHumidity.PKT
+    )} ${getDayOfMonth(maxHumidity.PKST || maxHumidity.PKT)} `
   );
 };

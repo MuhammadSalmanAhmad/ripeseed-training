@@ -1,4 +1,5 @@
 import fs from "fs/promises";
+import { REQUIRED_FIELDS } from "../constants.js";
 
 export const fileParser = async (dirPath, fileName) => {
   let path = `${dirPath}/${fileName}`;
@@ -28,31 +29,29 @@ const parseCSVData = (data) => {
 
   if (lines.length === 0) return [];
   let keys = lines[0].split(",");
+
   lines.slice(1).forEach((line) => {
     if (line.trim() === "") return;
     const values = line.split(",");
-    const weatherData = new Map();
+    const weatherData = {};
+
     keys.forEach((key, index) => {
-      weatherData.set(key.trim(), values[index]);
+      key = key.trim();
+      if (REQUIRED_FIELDS.includes(key)) {
+        weatherData[key] = values[index];
+      }
     });
+    
     parsedData.push(weatherData);
   });
 
   return parsedData;
 };
 
-//function for validating structured data
+const validateRecords = (item) => {
+  return REQUIRED_FIELDS.every((field) => item[field] !== "");
+};
+
 const validateData = (weatherData) => {
   return weatherData.filter(validateRecords);
 };
-
-const validateRecords= (item)=> {
-  if (
-    item.get("Max TemperatureC") !== "" &&
-    item.get("Min TemperatureC") !== "" &&
-    item.get("Mean Humidity") !== "" &&
-    (item.get("PKST") !== "" || item.get("PKT") !== "")
-  ) {
-    return item;
-  }
-}
