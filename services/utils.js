@@ -1,6 +1,20 @@
+/* eslint-disable no-unused-vars */
+export const getMonthName = (value) => {
+  const date = new Date(value);
+  const monthName = date.toLocaleString("default", { month: "short" });
+  return monthName;
+};
+
+export const getDayOfMonth = (value) => {
+  const date = new Date(value);
+  const dayOfMonth = date.getDate();
+  return dayOfMonth;
+};
+
+//UTILS RELATED TO CALCUALTION.JS
 export const calculateAverage = (keyType, weatherData) => {
   return (
-   weatherData.reduce((sum, item) => {
+    weatherData.reduce((sum, item) => {
       return sum + Number(item.get(keyType));
     }, 0) / weatherData.length
   );
@@ -36,19 +50,7 @@ export const filterYearlyRecord = (yearWeatherData, keyType, isMax) => {
       value: Number(item.get(keyType)),
     });
   }, []);
-  const min = Math.min(...minValues.map((item) => item.value));
-  return minValues.find((item) => item.value === min);
-};
-
-/* eslint-disable no-unused-vars */
-export const getMonthName = (value) => {
-  const date = new Date(value);
-  const monthName = date.toLocaleString("default", { month: "short" });
-  return monthName;
-};
-
-export const getDayOfMonth = (value) => {
-  const date = new Date(value);
-  const dayOfMonth = date.getDate();
-  return dayOfMonth;
+  return minValues.find(
+    (item) => item.value === Math.min(...minValues.map((item) => item.value))
+  );
 };
