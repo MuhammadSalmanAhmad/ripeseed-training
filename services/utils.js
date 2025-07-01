@@ -33,24 +33,17 @@ export const extractValuesByKey = (keyType, weatherData) => {
 };
 
 export const filterYearlyRecord = (yearWeatherData, keyType, isMax) => {
-  if (isMax) {
-    const maxValues = yearWeatherData.reduce((acc, item) => {
-      return acc.concat({
-        Date: item.get("PKT") || item.get("PKST"),
-        value: Number(item.get(keyType)),
-      });
-    }, []);
-    return maxValues.find(
-      (item) => item.value === Math.max(...maxValues.map((item) => item.value))
-    );
-  }
-  const minValues = yearWeatherData.reduce((acc, item) => {
+  const values = yearWeatherData.reduce((acc, item) => {
     return acc.concat({
       Date: item.get("PKT") || item.get("PKST"),
       value: Number(item.get(keyType)),
     });
   }, []);
-  return minValues.find(
-    (item) => item.value === Math.min(...minValues.map((item) => item.value))
-  );
+  return isMax
+    ? values.find(
+        (item) => item.value === Math.max(...values.map((item) => item.value))
+      )
+    : values.find(
+        (item) => item.value === Math.min(...values.map((item) => item.value))
+      );
 };
