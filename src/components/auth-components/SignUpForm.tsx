@@ -12,13 +12,13 @@ import { useForm } from "react-hook-form";
 import AuthButton from "./AuthButton";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registrationSchema } from "../../schemas/authSchemas";
+import { createUser } from "../../services/firebaseAuth";
 import { useNavigation } from "@react-navigation/native";
 
 const SignUpForm = () => {
   const navigation = useNavigation<any>();
+
   const {
-    register,
-    setValue,
     handleSubmit,
     control,
     reset,
@@ -28,10 +28,10 @@ const SignUpForm = () => {
   const onSubmit = (data: any) => {
     console.log("data", data);
     Alert.alert(JSON.stringify(data));
+    createUser(data["email"], data["password"]);
     navigation.navigate("Login");
   };
   console.log(errors);
-
 
   return (
     <View className="items-center gap-4 mt-10">

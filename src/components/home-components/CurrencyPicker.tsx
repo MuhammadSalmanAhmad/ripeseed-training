@@ -17,7 +17,7 @@ const CurrencyPicker = ({currency,onSelectCurrency}:any) => {
         showCurrencyName={false}
         showCurrencyCode={true}
         onSelectCurrency={(data) => {
-          onSelectCurrency(data)
+          onSelectCurrency(data.code)
         }}
         onOpen={() => console.log("Picker opened")}
         onClose={() => console.log("Picker Closed")}

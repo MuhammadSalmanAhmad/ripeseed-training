@@ -8,8 +8,6 @@ interface AuthButtonProps {
 }
 
 const AuthButton = ({ buttonName, handleSubmit }: AuthButtonProps) => {
- 
-
   return (
     <TouchableOpacity
       className="bg-primary w-full py-4 rounded-lg items-center"

@@ -2,41 +2,48 @@ import {
   View,
   Text,
   SafeAreaView,
-  TouchableOpacity,
   Alert,
+  ActivityIndicator,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FormInputController from "../components/form-components/FormInputController";
 import { MailIcon, Lock } from "lucide-react-native";
 import AuthButton from "../components/auth-components/AuthButton";
 import AuthFooter from "../components/auth-components/AuthFooter";
 import { useForm } from "react-hook-form";
-import { Button } from "react-native";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../schemas/authSchemas";
 import { useNavigation } from "@react-navigation/native";
+import { userLogin } from "../services/firebaseAuth";
 
-const Login = () => {
+const Login = ({}) => {
+
+  const [loading, setLoading] = useState(false);
+
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm({
-    resolver:yupResolver(loginSchema)
+    resolver: yupResolver(loginSchema),
   });
+
   const navigation = useNavigation<any>();
-  const onSubmit = (data:any) => {
-    //alert(data);
-    console.log("data", data);
-    Alert.alert(JSON.stringify(data));
-    console.log(errors)
-    navigation.navigate('Home')
+
+  const onSubmit = async(data: any) => {
+    setLoading(true);
+    const result = await userLogin(data['email'], data['password']);
+    setLoading(false);
+    if (!result.success) {
+      Alert.alert(result.error as any);
+    }
   };
+
   return (
     <SafeAreaView className="flex-1">
       <View className="flex-1">
         <View className="items-center">
-          <Text className="text-4xl text-primary font-semibold">
+          <Text className="text-4xl text-primary font-semibold ">
             Welcome to Nayapay
           </Text>
         </View>
@@ -61,10 +68,14 @@ const Login = () => {
               errors={errors}
             />
           </View>
-          <AuthButton
-            buttonName="Login"
-            handleSubmit={handleSubmit(onSubmit)}
-          ></AuthButton>
+          {loading ? (
+            <ActivityIndicator size="large" color="#007AFF" style={{ marginVertical: 20 }} />
+          ) : (
+            <AuthButton
+              buttonName="Login"
+              handleSubmit={handleSubmit(onSubmit)}
+            />
+          )}
           {/* <Button title="submit" onPress={handleSubmit(onSubmit)}></Button> */}
         </View>
         <AuthFooter
